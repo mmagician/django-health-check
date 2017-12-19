@@ -1,7 +1,7 @@
 from django.apps import AppConfig
+from django.conf import settings
 
 from health_check.plugins import plugin_dir
-from django.conf import settings
 
 
 class HealthCheckConfig(AppConfig):
@@ -16,7 +16,7 @@ class HealthCheckConfig(AppConfig):
 
             try:
                 name = queue_dict['display_name']
-            except:
+            except KeyError:
                 name = celery_class_name
 
             # Allow specifying the registry name
@@ -27,7 +27,5 @@ class HealthCheckConfig(AppConfig):
             if queue == 'default':
                 queue = None
 
-            CeleryHealthCheckQueue = type(celery_class_name,
-                                          (CeleryHealthCheck,),
-                                          {'queue_display_name': name, 'queue': queue})
-            plugin_dir.register(CeleryHealthCheckQueue, registry=registry_name)
+            celery_class = type(celery_class_name, (CeleryHealthCheck,), {'queue_display_name': name, 'queue': queue})
+            plugin_dir.register(celery_class, registry=registry_name)
