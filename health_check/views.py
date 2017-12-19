@@ -9,12 +9,16 @@ from health_check.plugins import plugin_dir
 
 class MainView(TemplateView):
     template_name = 'health_check/index.html'
+    registry = '_registry'
+
+    def get_object(self, queryset=None):
+        return queryset.get(registry=self.registry)
 
     @never_cache
     def get(self, request, *args, **kwargs):
         plugins = []
         errors = []
-        for plugin_class, options in plugin_dir._registry:
+        for plugin_class, options in getattr(plugin_dir, self.registry):
             plugin = plugin_class(**copy.deepcopy(options))
             plugin.run_check()
             plugins.append(plugin)

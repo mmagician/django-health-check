@@ -19,6 +19,9 @@ class HealthCheckConfig(AppConfig):
             except:
                 name = celery_class_name
 
+            # Allow specifying the registry name
+            registry_name = '_registry%s' % queue
+
             # Apply_async will timeout if we pass it a 'default' queue
             # Rather, it should take NoneType
             if queue == 'default':
@@ -27,4 +30,4 @@ class HealthCheckConfig(AppConfig):
             CeleryHealthCheckQueue = type(celery_class_name,
                                           (CeleryHealthCheck,),
                                           {'queue_display_name': name, 'queue': queue})
-            plugin_dir.register(CeleryHealthCheckQueue)
+            plugin_dir.register(CeleryHealthCheckQueue, registry=registry_name)
