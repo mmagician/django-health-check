@@ -53,3 +53,11 @@ TEMPLATES = [
 SECRET_KEY = uuid.uuid4().hex
 
 USE_L10N = True
+
+CELERY_QUEUES = {
+    'default': {
+        'exchange': 'default',
+        'binding_key': 'default',
+        'display_name': 'Celery queue 1'
+    }
+}
