@@ -1,7 +1,7 @@
 from django.apps import AppConfig
+from django.conf import settings
 
 from health_check.plugins import plugin_dir
-from django.conf import settings
 
 
 class HealthCheckConfig(AppConfig):
