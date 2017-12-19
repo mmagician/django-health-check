@@ -51,6 +51,20 @@ Add the ``health_check`` applications to your ``INSTALLED_APPS``:
         'health_check.contrib.s3boto_storage',      # requires boto and S3BotoStorage backend
     ]
 
+If you're using the celery health check, make sure your CELERY_QUEUES are updated (in settings.py).
+This way, you can check all of your celery queues are working, e.g.:
+
+.. code:: python
+
+    CELERY_QUEUES = {
+        'default': {
+            "exchange": "default",
+            "binding_key": "default",
+            "display_name": "My name to display" # The name is optional
+        },
+        # ...
+    }
+
 Setting up monitoring
 ---------------------
 
