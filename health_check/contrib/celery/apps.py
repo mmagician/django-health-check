@@ -16,7 +16,7 @@ class HealthCheckConfig(AppConfig):
 
             try:
                 name = queue_dict['display_name']
-            except:
+            except KeyError:
                 name = celery_class_name
 
             # Apply_async will timeout if we pass it a 'default' queue
@@ -24,7 +24,5 @@ class HealthCheckConfig(AppConfig):
             if queue == 'default':
                 queue = None
 
-            CeleryHealthCheckQueue = type(celery_class_name,
-                                          (CeleryHealthCheck,),
-                                          {'queue_display_name': name, 'queue': queue})
-            plugin_dir.register(CeleryHealthCheckQueue)
+            celery_class = type(celery_class_name, (CeleryHealthCheck,), {'queue_display_name': name, 'queue': queue})
+            plugin_dir.register(celery_class)
