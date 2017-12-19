@@ -16,10 +16,16 @@ class HealthCheckPluginDirectory:
         """Reset registry state, e.g. for testing purposes."""
         self._registry = []
 
-    def register(self, plugin, **options):
+    def register(self, plugin, registry='_registry', **options):
         """Add the given plugin from the registry."""
         # Instantiate the admin class to save in the registry
-        self._registry.append((plugin, options))
+        try:
+            reg = getattr(self, registry)
+        except:
+            setattr(self,registry, [])
+            reg = getattr(self, registry)
+
+        reg.append((plugin, options))
 
 
 plugin_dir = HealthCheckPluginDirectory()
