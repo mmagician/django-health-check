@@ -57,10 +57,8 @@ This way, you can check all of your celery queues are working, e.g.:
 .. code:: python
 
     CELERY_QUEUES = {
-        'default': {
-            "exchange": "default",
-            "binding_key": "default",
-            "display_name": "My name to display" # The name is optional
+        'my_queue_1': {
+            # ...
         },
         # ...
     }

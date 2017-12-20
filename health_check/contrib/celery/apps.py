@@ -10,19 +10,8 @@ class HealthCheckConfig(AppConfig):
     def ready(self):
         from .backends import CeleryHealthCheck
 
-        # Celery queues defined in SETTINGS as CELERY_QUEUES:
-        for queue, queue_dict in settings.CELERY_QUEUES.items():
+        for queue in settings.CELERY_QUEUES:
             celery_class_name = 'CeleryHealthCheck' + queue.title()
 
-            try:
-                name = queue_dict['display_name']
-            except KeyError:
-                name = celery_class_name
-
-            # Apply_async will timeout if we pass it a 'default' queue
-            # Rather, it should take NoneType
-            if queue == 'default':
-                queue = None
-
-            celery_class = type(celery_class_name, (CeleryHealthCheck,), {'queue_display_name': name, 'queue': queue})
+            celery_class = type(celery_class_name, (CeleryHealthCheck,), {'queue': queue})
             plugin_dir.register(celery_class)

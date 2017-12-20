@@ -8,7 +8,7 @@ from health_check.exceptions import HealthCheckException
 logger = logging.getLogger('health-check')
 
 
-class BaseHealthCheckBackend:
+class BaseHealthCheckBackend(object):
     def __init__(self):
         self.errors = []
 
