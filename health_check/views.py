@@ -2,11 +2,12 @@ import copy
 
 from django.http import JsonResponse
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 
 from health_check.plugins import plugin_dir
 
-
+@csrf_exempt
 class MainView(TemplateView):
     template_name = 'health_check/index.html'
     registry = '_registry'
