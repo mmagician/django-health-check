@@ -59,5 +59,10 @@ CELERY_QUEUES = {
         'exchange': 'default',
         'binding_key': 'default',
         'display_name': 'Celery queue 1'
+    },
+    'queue2': {
+        'exchange': 'queue2',
+        'binding_key': 'queue2',
+        'display_name': 'Celery queue 2'
     }
 }
