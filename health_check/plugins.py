@@ -21,8 +21,8 @@ class HealthCheckPluginDirectory:
         # Instantiate the admin class to save in the registry
         try:
             reg = getattr(self, registry)
-        except:
-            setattr(self,registry, [])
+        except AttributeError:
+            setattr(self, registry, [])
             reg = getattr(self, registry)
 
         reg.append((plugin, options))
