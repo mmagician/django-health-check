@@ -19,8 +19,11 @@ class HealthCheckConfig(AppConfig):
             except KeyError:
                 name = celery_class_name
 
+            celery_class = type(celery_class_name, (CeleryHealthCheck,), {'queue_display_name': name, 'queue': queue})
+
+            # Register the celery health check under /ht/
+            plugin_dir.register(celery_class)
+            # Register the celery health check under its custom url /ht/celery_{queue_name}
             # Allow specifying the registry name
             registry_name = '_registry%s' % queue
-
-            celery_class = type(celery_class_name, (CeleryHealthCheck,), {'queue_display_name': name, 'queue': queue})
             plugin_dir.register(celery_class, registry=registry_name)
