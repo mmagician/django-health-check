@@ -1,3 +1,4 @@
+from celery import current_app
 from django.conf import settings
 
 from health_check.contrib.celery.backends import CeleryHealthCheck
@@ -18,4 +19,4 @@ class TestAutoDiscover:
 
     def test_discover_celery_queues(self):
         celery_plugins = [x for x in plugin_dir._registry if issubclass(x[0], CeleryHealthCheck)]
-        assert len(celery_plugins) == len(settings.CELERY_QUEUES)
+        assert len(celery_plugins) == len(current_app.amqp.queues)

@@ -54,7 +54,7 @@ SECRET_KEY = uuid.uuid4().hex
 
 USE_L10N = True
 
-CELERY_QUEUES = {
+CELERY_TASK_QUEUES = {
     'default': {},
     'queue2': {}
 }

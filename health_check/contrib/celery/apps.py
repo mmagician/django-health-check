@@ -1,5 +1,5 @@
+from celery import current_app
 from django.apps import AppConfig
-from django.conf import settings
 
 from health_check.plugins import plugin_dir
 
@@ -10,7 +10,7 @@ class HealthCheckConfig(AppConfig):
     def ready(self):
         from .backends import CeleryHealthCheck
 
-        for queue in settings.CELERY_QUEUES:
+        for queue in current_app.amqp.queues:
             celery_class_name = 'CeleryHealthCheck' + queue.title()
 
             celery_class = type(celery_class_name, (CeleryHealthCheck,), {'queue': queue})
