@@ -25,6 +25,3 @@ class CeleryHealthCheck(BaseHealthCheckBackend):
             self.add_error(ServiceUnavailable("IOError"), e)
         except BaseException as e:
             self.add_error(ServiceUnavailable("Unknown error"), e)
-
-    def identifier(self):
-        return self.queue_display_name  # Display name on the endpoint seen at /ht/

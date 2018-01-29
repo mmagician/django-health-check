@@ -19,6 +19,14 @@ Writing your own custom health checks is also very quick and easy.
 
 We also like contributions, so don't be afraid to make a pull request.
 
+Supported Versions
+------------------
+
+We officially only support the latest Version of Python as well as the
+latest version of Django and the latest Django LTS version.
+
+.. note:: The latest version to support Python 2 is 2.4.0
+
 Installation
 ------------
 
@@ -34,7 +42,7 @@ Add the health checker to an URL you want to use:
 
     urlpatterns = [
         # ...
-        url(r'^ht/$', include('health_check.urls')),
+        url(r'^ht/', include('health_check.urls')),
     ]
 
 Add the ``health_check`` applications to your ``INSTALLED_APPS``:
@@ -51,19 +59,11 @@ Add the ``health_check`` applications to your ``INSTALLED_APPS``:
         'health_check.contrib.s3boto_storage',      # requires boto and S3BotoStorage backend
     ]
 
-If you're using the celery health check, make sure your CELERY_QUEUES are updated (in settings.py).
-This way, you can check all of your celery queues are working, e.g.:
+If using the DB check, run migrations:
 
-.. code:: python
+.. code::
 
-    CELERY_QUEUES = {
-        'default': {
-            "exchange": "default",
-            "binding_key": "default",
-            "display_name": "My name to display" # The name is optional
-        },
-        # ...
-    }
+    django-admin migrate
 
 Setting up monitoring
 ---------------------
