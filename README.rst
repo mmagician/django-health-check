@@ -34,7 +34,7 @@ Add the health checker to an URL you want to use:
 
     urlpatterns = [
         # ...
-        url(r'^ht/$', include('health_check.urls')),
+        url(r'^ht/', include('health_check.urls')),
     ]
 
 Add the ``health_check`` applications to your ``INSTALLED_APPS``:
@@ -50,6 +50,12 @@ Add the ``health_check`` applications to your ``INSTALLED_APPS``:
         'health_check.contrib.celery',              # requires celery
         'health_check.contrib.s3boto_storage',      # requires boto and S3BotoStorage backend
     ]
+
+If using the DB check, run migrations:
+
+.. code::
+
+    django-admin migrate
 
 Setting up monitoring
 ---------------------
