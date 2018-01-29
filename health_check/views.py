@@ -20,7 +20,7 @@ class MainView(TemplateView):
 
         plugins = sorted((
             plugin_class(**copy.deepcopy(options))
-            for plugin_class, options in plugin_dir._registry
+            for plugin_class, options in getattr(plugin_dir, self.registry)
         ), key=lambda plugin: plugin.identifier())
 
         def _run(plugin):
